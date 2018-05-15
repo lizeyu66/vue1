@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>vue案例</title>
+</head>
+<body>
+	<!-- 声明式渲染 -->
+	<div id="app1">
+		{{msg}}
+	</div>
+
+	<!-- // 绑定元素属性 -->
+	<div id="app2">
+		<span v-bind:title="msg">
+			鼠标移入查看绑定信息！
+		</span>
+		<div v-bind:class="className">绑定类名</div>
+		<button v-bind:disabled="isButtonDisabled">Button</button>
+		<a v-bind:href="imgurl" :alt="message">...</a>
+		<!-- v-bind缩写 -->
+		<div :class="className">绑定类名</div>
+	</div>
+	<!-- 条件与循环 -->
+	<div id="app3">
+		<p v-if="seen">设置为true就可以看到内容</p>
+		<p v-else>不能看见内容</p>
+
+		<div v-if="type === 'A'">
+			A
+		</div>
+		<div v-else-if="type === 'B'">
+			B
+		</div>
+		<div v-else-if="type === 'C'">
+			C
+		</div>
+		<div v-else>
+			Not A/B/C
+		</div>
+
+		<template v-if="loginType === 'username'">
+			<label>Username</label>
+			<input placeholder="Enter your username" key="username-input">
+		</template>
+		<template v-else>
+			<label>Email</label>
+			<input placeholder="Enter your email address" key="email-input">
+		</template>
+		<input type="button" value="login_type" @click="toggle">
+	</div>
+	<!-- 循环 -->
+	<ul id="example-1">
+		<li v-for="item in items">
+			{{ item.message }}
+		</li>
+	</ul>
+	<ul id="v-for-object" class="demo">
+		<li v-for="value in object">
+			{{ value }}
+		</li>
+	</ul>
+
+	<div id="app4">
+		<ol>
+			<li v-for="item in todos">
+				{{ item.text }}
+			</li>
+		</ol>
+	</div>
+	<!-- v-show -->
+	<div id="app11">
+		<input type="button" value="显示/隐藏" @click="toggle">
+		<p v-show="isshow">hello v-show</p>
+	</div>
+	<!-- 处理用户输入 -->
+	<!-- v-on -->
+	<div id="app5">
+		<p>{{ msg }}</p>
+		<button v-on:click="reverseMessage">内容翻转</button>
+		<button v-on:click="alert1">弹出</button>
+		<input type="button" v-on:click.prevent="onSubmit" value="pervent">
+		<!-- v-on缩写 -->
+		<button @click="reverseMessage">内容翻转</button>
+	</div>
+	<!-- v-model -->
+	<div id="app6">
+		<p>{{ msg }}</p>
+		<input v-model="msg">
+	</div>
+
+	<!-- 插值 -->
+	<div id="app7" v-once>v-once使内容不会改变: {{ msg }}</div>
+	<div id="app8" v-html="content">
+		<div></div>
+	</div>
+
+	<!-- 计算属性 -->
+	<div id="app10">
+		<p>原内容: "{{ message }}"</p>
+		<p>计算之后内容: "{{ reversedMessage }}"</p>
+		<!-- method实现上一行功能 -->
+		<p>Reversed message: "{{ reverseMessage }}"</p>
+		<p>现在的时间:{{now}}</p>
+	</div>
+
+	<div id="demo">
+		{{ fullName }}
+	</div>
+	<!-- 侦听器 -->
+	<div id="watch">
+		<p>
+			Ask a yes/no question:
+			<input v-model="question">
+		</p>
+		<p>{{ answer }}</p>
+	</div>
+	<!-- class与style绑定 --> 
+
+	<div class="static" id="app9"
+	v-bind:class="{ active: isActive, 'text-danger': hasError }">
+	<div :class="[activeClass, errorClass]">绑定类名app9</div>
+</div>
+
+<!-- 过滤，排序 -->
+<li v-for="n in evenNumbers" id="app12">{{n}}</li>
+
+<!-- 事件处理 -->
+<div id="example-11">
+	<button v-on:click="counter += 1">Add 1</button>
+	<p>The button above has been clicked {{ counter }} times.</p>
+</div>
+<div id="example-2">
+	<button v-on:click="greet">Greet</button>
+</div>
+<!-- 表单 -->
+<div id="app13">
+	<!-- <input type="text" v-model="msg"> -->
+	<textarea name="" id="" cols="30" rows="10" v-model.lazy="msg"></textarea>
+	<p>{{msg}}</p>
+	<input type="checkbox"  v-model="checked">
+</div>
+<div id="app14">
+	<input type="checkbox" name="goods" v-model="checkgoods" value="上衣">
+	<input type="checkbox" name="goods" v-model="checkgoods" value="裤子">
+	<input type="checkbox" name="goods" v-model="checkgoods" value="鞋靴">
+	<p>{{checkgoods}}</p>
+</div>
+<div id="app15">
+	<input type="radio" value="man" v-model="sex">
+	<input type="radio" value="woman" v-model="sex">
+</div>
+<div id="app16">
+	<select name="" id="" v-model="city">
+		<option value="">北京</option>
+		<option value="">石家庄</option>
+		<option value="">太原</option>
+		<option value="">高平</option>
+	</select>
+	<p>{{city}}</p>
+</div>
+<script src="vue.js"></script>
+<script>
+	var app1=new Vue({
+		el:"#app1",
+		data:{
+			msg:"hello vue1"
+		}
+	});
+	var app2=new Vue({
+		el: '#app2',
+		data: {
+			msg: '页面加载于 ' + new Date().toLocaleString(),
+			className:["band","band2"],
+			isButtonDisabled:true,
+			imgurl:"img/IMG_2901.PNG",
+			message:"等待图片加载"
+		}
+	});
+	var app3=new Vue({
+		el: '#app3',
+		data: {
+			seen: true,
+			username:true,
+			loginType:"usernamw",
+			type:"B"
+		},
+		methods:{
+			toggle:function(){
+				this.loginType=!this.username;
+
+			}
+		}
+	});
+	var app4 = new Vue({
+		el: '#app4',
+		data: {
+			todos: [
+			{ text: '学习HTML' },
+			{ text: '学习 JavaScript' },
+			{ text: '学习 Vue' }
+			]
+		}
+	});
+	var app5 = new Vue({
+		el: '#app5',
+		data: {
+			msg: 'Hello app5',
+		},
+		methods: {
+			reverseMessage: function () {
+				this.msg = this.msg.split('').reverse().join('')
+			},
+			alert1:function(){
+				alert("app5");
+			},
+			onSubmit:function(){
+				console.log("prevent");
+			}
+		}
+	});
+	var app6 = new Vue({
+		el: '#app6',
+		data: {
+			msg: 'Hello app6'
+		}
+	});
+	var app7 = new Vue({
+		el: '#app7',
+		data: {
+			msg: 'Hello app7'
+		}
+	});
+	var app8=new Vue({
+		el:"#app8",
+		data:{
+			content:"<b>hello vue8</b>"
+		}
+	})
+	var vm = new Vue({
+		el: '#app10',
+		data: {
+			message: 'Hello'
+		},
+		computed: {
+			reversedMessage: function () {
+				return this.message.split('').reverse().join('')
+			},
+			now: function () {
+				return Date.now()
+			}
+		},
+		methods: {
+			reverseMessage: function () {
+				return this.message.split('').reverse().join('')
+			}
+		}
+	})
+	var vm = new Vue({
+		el: '#demo',
+		data: {
+			firstName: 'Foo',
+			lastName: 'Bar'
+		},
+		computed: {
+			fullName:{
+				get:function () {
+					return this.firstName + ' ' + this.lastName
+				},
+				set: function (newValue) {
+					var names = newValue.split(' ')
+					this.firstName = names[0]
+					this.lastName = names[names.length - 1]
+				}
+			}
+
+		}
+	})
+	var vm=new Vue({
+		el:"#watch",
+		data:{
+			question: "提出问题",
+			answer: "解决问题"
+		},
+		watch:{
+    			// 如果question 发生改变，这个函数就会运行
+    			question: function (newQuestion, oldQuestion) {
+    				this.answer = '等待解决问题'
+    				// this.getAnswer()
+    			},
+    			methods:{
+
+    			}
+    		}
+    	})
+	var app9=new Vue({
+		el:"#app9",
+		data: {
+			isActive: true,
+			hasError: false,
+			error: null,
+			activeClass: "active",
+			errorClass: "text-danger"
+		},
+		computed: {
+			classObject: function () {
+				return {
+					active: this.isActive && !this.error,
+				}
+			}
+		}
+	})
+	var app11=new Vue({
+		el:"#app11",
+		data:{
+			isshow:true
+		},
+		methods:{
+			toggle:function(){
+				this.isshow=!this.isshow;
+			}
+		}
+	})
+	var example1 = new Vue({
+		el: '#example-1',
+		data: {
+			items: [
+			{ message: 'Foo' },
+			{ message: 'Bar' }
+			]
+		}
+	})
+	new Vue({
+		el: '#v-for-object',
+		data: {
+			object: {
+				firstName: 'John',
+				lastName: 'Doe',
+				age: 30
+			}
+		}
+	})
+	var app12=new Vue({
+		el:"#app12",
+		data: {
+			numbers: [ 1, 2, 3, 4, 5 ]
+		},
+		computed: {
+			evenNumbers: function () {
+				return this.numbers.filter(function (number) {
+					return number % 2 === 0
+				})
+			}
+		}
+	})
+	var example1 = new Vue({
+		el: '#example-11',
+		data: {
+			counter: 0
+		}
+	})
+	var example2 = new Vue({
+		el: '#example-2',
+		data: {
+			name: 'Vue.js'
+		},
+		methods: {
+			greet: function (event) {
+				alert('Hello ' + this.name + '!')
+		      // `event` 是原生 DOM 事件
+		      if (event) {
+		      	alert(event.target.tagName)
+		      }
+		  }
+		}
+	})
+	new Vue({
+		el:"#app13",
+		data:{
+			msg:"双向绑定",
+			checked:true
+		}
+	});
+	new Vue({
+		el:"#app14",
+		data:{
+			checkgoods:["上衣","裤子"]
+		}
+	});
+	new Vue({
+		el:"#app15",
+		data:{
+			sex:"man"
+		}
+	})
+	new Vue({
+		el:"#app16",
+		data:{
+			city:""
+		}
+	})
+
+// 也可以用 JavaScript 直接调用方法
+	example2.greet() // => 'Hello Vue.js!'
+</script>
+</body>
+</html>

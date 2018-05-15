@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>vue-computed</title>
+    <style>
+    	table{
+    		width: 300px;
+    		border: 1px solid #ccc;
+    		margin: 20px auto;
+    		border-collapse: collapse;
+    		text-align: center;
+    	}
+    	tr{
+    		border: 1px solid #ccc;
+    	}
+    	td{
+    		border: 1px solid #ccc;
+    	}
+    	.add{
+    		cursor: pointer;
+    	}
+    	.reduce{
+    		cursor: pointer;
+    	}
+    </style>
+</head>
+<body>
+	<div id="app1">
+		<div>{{message}}</div>
+		<div>{{reversemessage}}</div>
+	</div>
+	<div id="app2">
+		<div>数字1:{{num1}}</div>
+		<div>数字2:{{num2}}</div>
+		<div>和:{{sum}}</div>
+	</div>
+	<table>
+		<tr>
+			<td>单价</td>
+			<td>操作</td>
+			<td>数量</td>
+			<td>操作</td>
+			<td>总价</td>
+		</tr>
+		<tr>
+			<td>{{price}}</td>
+			<td class="reduce" @mousedown.prevent="reduce">-</td>
+			<td>{{count}}</td>
+			<td class="add" @mousedown.prevent="add">+</td>
+			<td>{{total}}</td>
+		</tr>
+	</table>
+	<div id="app3">
+		
+	</div>
+	<!-- //完成计算更多用computed,而不用函数 -->
+	<script src="vue.js"></script>
+	<script>
+		var vm=new Vue({
+			el:"#app1",
+			data:{
+				message:"hello"
+			},
+			computed:{
+				reversemessage:function(){
+					return this.message.split("").reverse().join("");
+				}
+			}
+		});
+		new Vue({
+			el:"#app2",
+			data:{
+				num1:10,
+				num2:100
+			},
+			computed:{
+				sum:function(){
+					return this.num1+this.num2;
+				}
+			}
+		})
+		new Vue({
+			el:"table",
+			data:{
+				price:50,
+				count:0
+			},
+			methods:{
+				add:function(){
+					this.count++;
+				},
+				reduce:function(){
+					this.count>0?this.count--:"";
+
+				}
+			},
+			computed:{
+				total:function(){
+					return this.price*this.count;
+				}
+				
+			}
+		})
+	</script>
+</body>
+
+</html>

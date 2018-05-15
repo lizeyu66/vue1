@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>vue</title>
+	<style>
+	.underline{
+		text-decoration: underline;
+	}
+	img{
+		width: 30px;
+		height: 50px;
+	}
+</style>
+</head>
+<body>
+	<!-- 拆分字符串，实现翻转，在转化为字符串 -->
+	<div id="app1">
+		<div>{{message.split("").reverse().join("")}}</div>
+	</div>
+	<!-- 文本插值 -->
+	<div id="app2" v-html="content">
+		<div></div>
+	</div>
+	<!-- 绑定某个属性v-bind -->
+	<!-- 指令  v-bind -->
+	<!-- 1.可以简写 -->
+	<!-- 2.可以写多个 -->
+	<!-- 3.在值当中也可以使用表达式 -->
+	<div id="app3">
+		<div>
+			<!-- <img v-bind:src="imgurl" alt=""> -->
+			<!-- 绑定某个属性v-bind可以缩写为 ： -->
+			<img :src="imgurl" :alt="message">
+		</div>
+	</div>
+	<!-- 绑定类名 -->
+	<div id="app4" :class="classname">
+		hello app4
+	</div>
+	<!-- 如果hasUnderline为true则underline类名会被添加上，反之则不会 -->
+	<div id="app5" :class="{underline:hasUnderline}">
+		hello app5
+		<!-- v-on添加事件监听 -->
+		<input type="button" value="toggle" v-on:click="toggle">
+	</div>
+	<div id="app7" :class="{active:isactive}">
+		hello app7
+	</div>
+	<!-- v-if 条件，v-else,v-else if -->
+	<div id="app6" v-once>
+		<p v-if="seen">seen为真则可以看到p标签</p>
+		<p>这个将不会改变: {{ msg }}</p>
+	</div>
+	<!-- v-if假值时将元素隐藏，而v-show假值则元素消失 -->
+	<!-- //v-show 实现显示/隐藏-->
+	<div id="app21">
+		<!-- v-on:click="toggle"可以缩写为@click="toggle" -->
+		<input type="button" value="显示/隐藏" @click="toggle">
+		<p v-show="isshow">hello v-show</p>
+	</div> 
+	<!-- v-if,v-else实现显示/隐藏 -->
+	<div id="app21">
+		<input type="button" value="显示/隐藏" @click="toggle">
+		<p  v-if="isshow">hello v-show</p>
+		<p v-else></p>
+	</div> 
+	<script src="vue.js"></script>
+	<script>
+		//文本插值
+		var app1=new Vue({
+			el:"#app1",
+			data:{
+				message:"hello world"
+			}
+		})
+		//html v-html v-text
+		var app2=new Vue({
+			el:"#app2",
+			data:{
+				content:"<b>hello vue</b>"
+			}
+		})
+
+		var app3=new Vue({
+			el:"#app3",
+			data:{
+				imgurl:"img/IMG_2901.PNG",
+				message:"提示信息"
+			}
+		})
+		// style class
+		var app4=new Vue({
+			el:"#app4",
+			data:{
+				classname:["one","two"]
+			}
+		})
+		var app5=new Vue({
+			el:"#app5",
+			data:{
+				hasUnderline:true
+				// hasUnderline:false
+			},
+			methods:{
+				toggle:function(){
+					this.hasUnderline=!this.hasUnderline;
+				}
+			}
+		})
+		var app6=new Vue({
+			el:"#app6",
+			seen:false,
+			data:{
+				msg:"app6"
+			}
+		})
+		var app7=new Vue({
+			el:"#app7",
+			data:{
+				isactive:false
+			}
+		})
+		var app21=new Vue({
+			el:"#app21",
+			data:{
+				isshow:true
+			},
+			methods:{
+				toggle:function(){
+					this.isshow=!this.isshow;
+				}
+			}
+		})
+	</script>
+</body>
+</html>

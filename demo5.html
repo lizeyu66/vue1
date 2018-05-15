@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>vue-表单</title>
+</head>
+<body>
+	<div id="app1">
+		<!-- <input type="text" v-model="msg"> -->
+		<textarea name="" id="" cols="30" rows="10" v-model.lazy="msg"></textarea>
+		<p>{{msg}}</p>
+		<input type="checkbox"  v-model="checked">
+	</div>
+	<div id="app2">
+		<input type="checkbox" name="goods" v-model="checkgoods" value="上衣">
+		<input type="checkbox" name="goods" v-model="checkgoods" value="裤子">
+		<input type="checkbox" name="goods" v-model="checkgoods" value="鞋靴">
+		<p>{{checkgoods}}</p>
+	</div>
+	<div id="app3">
+		<input type="radio" value="man" v-model="sex">
+		<input type="radio" value="woman" v-model="sex">
+	</div>
+	<div id="app4">
+		<select name="" id="" v-model="city">
+			<option value="">北京</option>
+			<option value="">石家庄</option>
+			<option value="">太原</option>
+			<option value="">高平</option>
+		</select>
+		<p>{{city}}</p>
+	</div>
+	<script src="vue.js"></script>
+	<script>
+		// 双向绑定
+		new Vue({
+			el:"#app1",
+			data:{
+				msg:"双向绑定",
+				checked:true
+			}
+		});
+		new Vue({
+			el:"#app2",
+			data:{
+				checkgoods:["上衣","裤子"]
+			}
+		});
+		new Vue({
+			el:"#app3",
+			data:{
+				sex:"man"
+			}
+		})
+		new Vue({
+			el:"#app4",
+			data:{
+				city:""
+			}
+		})
+	</script>
+</body>
+</html>

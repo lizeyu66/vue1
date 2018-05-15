@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>vue</title>
+    <style>
+    	
+    </style>
+</head>
+<body>
+	<!-- v-if假值时将元素隐藏，而v-show假值则元素消失 -->
+	<div id="app1" v-show:isshow></div>
+	<!-- //v-show 实现显示/隐藏-->
+		 <div id="app21">
+			<input type="button" value="显示/隐藏" @click="toggle">
+			<p v-show="isshow">hello v-show</p>
+			<!-- v-on:click="toggle"可以缩写为@click="toggle" -->
+		 </div> 
+	<!-- v-if,v-else实现显示/隐藏 -->
+		<div id="app21">
+			<input type="button" value="显示/隐藏" @click="toggle">
+			<p  v-if="isshow">hello v-show</p>
+			<p v-else></p>
+			<!-- v-on:click="toggle" 同@click="toggle" -->
+		</div> 
+	<div id="app3">
+		<h3>订单状态</h3>
+		<input type="button" value="changestate" @click="changestate">
+		<div v-if="state===0">未支付</div>
+		<div v-else-if="state===1">已付款</div>
+		<div v-else-if="state===2">配送中</div>
+		<div v-else-if="state===3">配送完成</div>
+		<div v-else>其他状态</div>
+	</div>
+</body>
+<script src="vue.js"></script>
+<script>
+	var app1=new Vue({
+		el:"#app1",
+		data:{
+			isshow:true
+		}
+	})
+	var app21=new Vue({
+		el:"#app21",
+		data:{
+			isshow:true
+		},
+		methods:{
+			toggle:function(){
+				this.isshow=!this.isshow;
+			}
+		}
+	})
+	var app3=new Vue({
+		el:"#app3",
+		data:{
+			state:0
+		},
+		methods:{
+			changestate:function(){
+				this.state++;
+			}
+		}
+	})
+</script>
+</html>

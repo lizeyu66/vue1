@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>vue-遍历</title>
+    <style>
+    	table{
+    		width: 600px;
+    		border: 1px solid #ccc;
+    		border-collapse: collapse;
+    		margin: auto;
+
+    	}
+    	tr{
+    		text-align: center;
+    		border: 1px solid #ccc;
+    	}
+    	td,th{
+    		border: 1px solid #ccc;
+    	}
+    	.del{
+    		color: red;
+    		cursor: pointer;
+    	}
+    	#add{
+    		cursor: pointer;
+    	}
+    </style>
+</head>
+<body>
+	<!-- 遍历 -->
+	<div id="app1">
+		<ul>
+			<li v-for="num in lists">{{num}}</li>
+		</ul>
+	</div>
+	<div id="app2">
+		<ul>
+			<li v-for="(val,key) in obj">   
+				<!-- (val,key) in obj也可以换成(val,key) of obj -->
+				<span>{{key}}</span>
+				<span>{{val}}</span>
+			</li>
+		</ul>
+	</div>
+	<table id="app3">
+		<tr>
+			<th>姓名</th>
+			<th>年龄</th>
+			<th>性别</th>
+			<th>操作</th>
+		</tr>
+		<tr v-for="obj in studentdata">
+			<td>{{obj.name}}</td>
+			<td>{{obj.age}}</td>
+			<td>{{obj.sex}}</td>
+			<td class="del" @click="del(obj.name)">删除</td> 
+			<!-- 本身就是Vue识别的js代码，所以不用加啊{{}} -->
+		</tr>
+		<tr>
+			<td id="add" colspan="4" @click="add">+</td>
+		</tr>
+	</table>
+<script src="vue.js">
+</body>
+</script>
+<script>
+	// v-for
+	new Vue({
+		el:"#app1",
+		data:{
+			lists:[1,2,3,4,5]
+		}
+	});
+	new Vue({
+		el:"#app2",
+		data:{
+			obj:{name:"zhangsna",age:"21",sex:"man"}
+		}
+	});
+	// new Vue({
+	// 	el:"#app3",
+	// 	data:{
+	// 		obj:{name:"zhangsna",age:"21",sex:"man"}
+	// 	}
+	// })
+	//vm-----viewmodel  mv与vm
+	var table=document.querySelector("table");
+	var vm=new Vue({
+		el:table,
+		data:{
+			studentdata:[{name:"zhangsna",age:21,sex:"man"},{name:"lisi",age:25,sex:"man"},{name:"wany",age:31,sex:"man"}]
+		},
+		methods:{
+			add:function(){
+				this.studentdata.push({name:Date.now(),age:"",sex:""});
+			},
+			del:function(name){
+				var data=this.studentdata;
+				data=data.filter(function(val,index){
+					return name!==val.name;
+				});	
+				this.studentdata=data;
+			}
+		}
+	});
+	// console.log(vm.studentdata);
+</script>
+</html>
